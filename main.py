@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import time
 
 # Replace 'YOUR_API_KEY' with your actual News API key
 api_key = '4d28967db8624f0eb0eca67fbf492984'
@@ -14,47 +15,40 @@ parameters = {
     'pageSize': 10  # Adjust the number of articles per page as needed
 }
 
-# Function to fetch all news articles and store them in a list
-def fetch_and_store_all_news():
-    all_articles = []
-    current_page = 1
-    while True:
-        parameters['page'] = current_page
-        response = requests.get(base_url, params=parameters)
-        if response.status_code == 200:
-            news_data = response.json()
-            articles = news_data.get('articles', [])
-            if not articles:
-                break
-            all_articles.extend(articles)
-            current_page += 1
-        else:
-            st.write('Failed to retrieve news data. Status code:', response.status_code)
-            break
-    return all_articles
+# Function to fetch headlines
+def fetch_headlines():
+    response = requests.get(base_url, params=parameters)
+    if response.status_code == 200:
+        news_data = response.json()
+        headlines = [article['title'] for article in news_data.get('articles', [])]
+        return headlines
+    else:
+        st.write('Failed to retrieve news data. Status code:', response.status_code)
+        return []
 
-# Fetch all news articles and store them
-all_news = fetch_and_store_all_news()
-current_article_index = 0
+# Fetch and store headlines
+all_headlines = fetch_headlines()
 
 # Display the app title
 st.title("News Headlines")
 
-# Check if articles are present
-if all_news:
-    # Create buttons for navigation
-    next_button = st.button("Next")
-    prev_button = st.button("Previous")
+# Check if headlines are present
+if all_headlines:
+    # Create a placeholder for displaying headlines
+    headline_placeholder = st.empty()
+    
+    # Initialize the current headline index
+    current_headline_index = 0
 
-    if next_button:
-        # Show the next article
-        current_article_index = (current_article_index + 1) % len(all_news)
+    # Automatically update headlines in a continuous loop
+    while True:
+        # Display the current headline
+        headline_placeholder.write(all_headlines[current_headline_index])
 
-    if prev_button:
-        # Show the previous article
-        current_article_index = (current_article_index - 1) % len(all_news)
+        # Update the index for the next headline
+        current_headline_index = (current_headline_index + 1) % len(all_headlines)
 
-    # Display the current article's title
-    st.write(all_news[current_article_index]['title'])
+        # Sleep for 3 seconds before displaying the next headline
+        time.sleep(3)
 else:
-    st.write('No articles found.')
+    st.write('No headlines found.')
