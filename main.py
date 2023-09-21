@@ -72,14 +72,15 @@ custom_css = """
 # Display the app title
 st.title("News Headlines")
 
-# Inject custom CSS
-st.markdown(custom_css, unsafe_allow_html=True)
-
 # Create a container for displaying news headlines
 headline_placeholder = st.empty()
 
-# Create a checkbox to pause and resume news
-pause_news = st.checkbox("Pause/Resume News")
+# Create a placeholder for the pause/resume checkbox
+pause_resume_placeholder = st.empty()
+pause_news = pause_resume_placeholder.checkbox("Pause/Resume News")
+
+# Inject custom CSS
+st.markdown(custom_css, unsafe_allow_html=True)
 
 # Create a button to show API Documentation
 if st.button("API Documentation"):
@@ -160,3 +161,14 @@ if st.button("API Documentation"):
 
     If you have any questions or need assistance, please contact prakashkmr48@gmail.com.
     """)
+
+# Display news headlines
+if all_headlines:
+    # Create a container for displaying headlines with horizontal scrolling
+    st.markdown('<div class="news-container">', unsafe_allow_html=True)
+
+    # Initialize the current headline index
+    current_headline_index = 0
+
+    while True:
+        # Check the value of the pause/resume checkbox
