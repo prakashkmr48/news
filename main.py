@@ -14,44 +14,47 @@ parameters = {
     'pageSize': 10  # Adjust the number of articles per page as needed
 }
 
-# Function to fetch headlines
-def fetch_headlines():
-    response = requests.get(base_url, params=parameters)
-    if response.status_code == 200:
-        news_data = response.json()
-        headlines = [article['title'] for article in news_data.get('articles', [])]
-        return headlines
-    else:
-        st.write('Failed to retrieve news data. Status code:', response.status_code)
-        return []
+# Function to fetch all news articles and store them in a list
+def fetch_and_store_all_news():
+    all_articles = []
+    current_page = 1
+    while True:
+        parameters['page'] = current_page
+        response = requests.get(base_url, params=parameters)
+        if response.status_code == 200:
+            news_data = response.json()
+            articles = news_data.get('articles', [])
+            if not articles:
+                break
+            all_articles.extend(articles)
+            current_page += 1
+        else:
+            st.write('Failed to retrieve news data. Status code:', response.status_code)
+            break
+    return all_articles
 
-# Fetch and store headlines
-all_headlines = fetch_headlines()
-current_headline_index = 0
+# Fetch all news articles and store them
+all_news = fetch_and_store_all_news()
+current_article_index = 0
 
 # Display the app title
 st.title("News Headlines")
 
-# Check if headlines are present
-if all_headlines:
+# Check if articles are present
+if all_news:
     # Create buttons for navigation
     next_button = st.button("Next")
     prev_button = st.button("Previous")
 
     if next_button:
-        # Show the next headline
-        current_headline_index = (current_headline_index + 1) % len(all_headlines)
+        # Show the next article
+        current_article_index = (current_article_index + 1) % len(all_news)
 
     if prev_button:
-        # Show the previous headline
-        current_headline_index = (current_headline_index - 1) % len(all_headlines)
+        # Show the previous article
+        current_article_index = (current_article_index - 1) % len(all_news)
 
-    # Display the current headline
-    st.write(all_headlines[current_headline_index])
-
-    # Add a button to fetch the full article for the current headline
-    if st.button("Read Full Article"):
-        article_url = [article['url'] for article in news_data.get('articles', [])][current_headline_index]
-        st.markdown(f"Read the full article [here]({article_url}).")
+    # Display the current article's title
+    st.write(all_news[current_article_index]['title'])
 else:
-    st.write('No headlines found.')
+    st.write('No articles found.')
