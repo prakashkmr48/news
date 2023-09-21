@@ -172,3 +172,13 @@ if all_headlines:
 
     while True:
         # Check the value of the pause/resume checkbox
+        if not pause_news:
+            # Apply custom CSS to the headline
+            headline_html = f'<div class="news-headline">{all_headlines[current_headline_index]}</div>'
+            headline_placeholder.markdown(headline_html, unsafe_allow_html=True)
+
+            # Update the index for the next headline
+            current_headline_index = (current_headline_index + 1) % len(all_headlines)
+
+        # Sleep for 10 seconds before displaying the next headline (slower scrolling)
+        time.sleep(10)
