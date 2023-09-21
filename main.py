@@ -11,11 +11,11 @@ base_url = 'https://newsapi.org/v2/top-headlines?'
 parameters = {
     'country': 'US',   # You can change the country code
     'apiKey': api_key,
-    'pageSize': 10  # Adjust the number of articles to fetch as needed
+    'pageSize': 10  # Adjust the number of articles per page as needed
 }
 
-# Function to fetch all news articles
-def fetch_all_news():
+# Function to fetch all news articles and store them in a list
+def fetch_and_store_all_news():
     all_articles = []
     current_page = 1
     while True:
@@ -34,7 +34,7 @@ def fetch_all_news():
     return all_articles
 
 # Fetch all news articles and store them
-all_news = fetch_all_news()
+all_news = fetch_and_store_all_news()
 current_article_index = 0
 
 # Display the app title
