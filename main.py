@@ -41,8 +41,12 @@ custom_css = """
     white-space: nowrap;
     font-size: 24px;
     font-weight: bold;
-    padding: 10px 0; /* Cover padding for the entire news line */
-    animation: scrollText 5s linear infinite, changeColor 5s linear infinite;
+    padding: 10px 20px; /* Expand padding to cover the entire news */
+    margin-right: 20px; /* Add space between headlines */
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    animation: scrollText 10s linear infinite, changeColor 10s linear infinite;
 }
 
 @keyframes scrollText {
@@ -96,7 +100,7 @@ if all_headlines:
             # Update the index for the next headline
             current_headline_index = (current_headline_index + 1) % len(all_headlines)
 
-        # Sleep for 5 seconds before displaying the next headline
-        time.sleep(5)
+        # Sleep for 10 seconds before displaying the next headline (slower scrolling)
+        time.sleep(10)
 else:
     st.write('No headlines found.')
