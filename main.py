@@ -29,37 +29,32 @@ def fetch_headlines():
 # Fetch and store headlines
 all_headlines = fetch_headlines()
 
-# Define custom CSS for styling headlines with animations and visual effects
+# Define custom CSS for styling headlines with horizontal scrolling
 custom_css = """
 <style>
+.news-container {
+    width: 100%;
+    overflow: hidden;
+}
+
 .news-headline {
+    white-space: nowrap;
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-right: 10px;
     padding: 10px;
     background-color: #f0f0f0;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    animation: fadeInUp 0.5s ease-in-out, rotate 5s linear infinite;
+    animation: scrollText 10s linear infinite;
 }
 
-@keyframes fadeInUp {
+@keyframes scrollText {
     0% {
-        opacity: 0;
-        transform: translateY(20px);
+        transform: translateX(100%);
     }
     100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
+        transform: translateX(-100%);
     }
 }
 </style>
@@ -73,6 +68,9 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 # Check if headlines are present
 if all_headlines:
+    # Create a container for displaying headlines with horizontal scrolling
+    st.markdown('<div class="news-container">', unsafe_allow_html=True)
+
     # Create a placeholder for displaying headlines
     headline_placeholder = st.empty()
 
