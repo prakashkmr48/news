@@ -36,12 +36,18 @@ st.title("News Headlines")
 if all_headlines:
     # Create a placeholder for displaying headlines
     headline_placeholder = st.empty()
-    
+
+    # Create a boolean variable to control the loop
+    run_headlines = True
+
     # Initialize the current headline index
     current_headline_index = 0
 
+    # Create a "Stop" button
+    stop_button = st.button("Stop")
+
     # Automatically update headlines in a continuous loop
-    while True:
+    while run_headlines:
         # Display the current headline
         headline_placeholder.write(all_headlines[current_headline_index])
 
@@ -50,5 +56,12 @@ if all_headlines:
 
         # Sleep for 3 seconds before displaying the next headline
         time.sleep(3)
+
+        # Check if the "Stop" button is clicked
+        if stop_button:
+            run_headlines = False  # Stop the loop when the button is clicked
+
+    # Display a message when the loop is stopped
+    st.write("Loop stopped.")
 else:
     st.write('No headlines found.')
