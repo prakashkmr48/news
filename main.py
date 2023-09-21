@@ -43,30 +43,34 @@ if all_headlines:
     # Initialize the current headline index
     current_headline_index = 0
 
+    # Create a "Stop" button
+    stop_button = st.button("Stop")
+
     # Create a "Display News" button
     display_button = st.button("Display News")
 
-    # Create a "Resume News" button
-    resume_button = st.button("Resume News")
-
     # Automatically update headlines in a continuous loop
     while run_headlines:
+        # Check if the "Stop" button is clicked
+        if stop_button:
+            run_headlines = False  # Stop the loop when the button is clicked
+            break
+
         # Check if the "Display News" button is clicked
         if display_button:
+            # Display the current headline
             headline_placeholder.write(all_headlines[current_headline_index])
-            display_button = False  # Reset the button state
 
-        # Update the index for the next headline
-        current_headline_index = (current_headline_index + 1) % len(all_headlines)
+            # Update the index for the next headline
+            current_headline_index = (current_headline_index + 1) % len(all_headlines)
+
+            # Reset the "Display News" button state
+            display_button = st.button("Display News")
 
         # Sleep for 3 seconds before displaying the next headline
         time.sleep(3)
 
-        # Check if the "Resume News" button is clicked
-        if resume_button:
-            resume_button = False  # Reset the button state
-
-    # Display a message when the loop is paused
-    st.write("News paused.")
+    # Display a message when the loop is stopped
+    st.write("News Paused.")
 else:
     st.write('No headlines found.')
