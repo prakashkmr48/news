@@ -75,17 +75,11 @@ st.title("News Headlines")
 # Inject custom CSS
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Create a button to toggle API Documentation
-show_api_doc = st.button("API Documentation")
-
-# Display API Documentation when button is clicked
-if show_api_doc:
-    st.title("API Documentation")
-
-    # Add your API documentation content here
-    st.write("Creating comprehensive API documentation typically involves several sections that explain various aspects of the API, including its purpose, endpoints, request parameters, response formats, and usage examples. Here's an example of API documentation for the Streamlit app you've developed:
-
-# News Headlines API Documentation
+# Create a button to show API Documentation
+if st.button("API Documentation"):
+    # Display the entire API documentation when the button is clicked
+    st.markdown("""
+    # News Headlines API Documentation
 
 ## Introduction
 
@@ -158,9 +152,9 @@ This API is provided for demonstration purposes and may not provide real-time or
 
 ## Contact
 
-If you have any questions or need assistance, please contact [Your Contact Information].
+If you have any questions or need assistance, please contact prakashkmr48@gmail.com.
 
-")
+""")
     
 
 # Display news headlines
