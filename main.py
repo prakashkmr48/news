@@ -46,7 +46,7 @@ custom_css = """
     background-color: #f0f0f0;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    animation: scrollText 10s linear infinite, changeColor 10s linear infinite;
+    animation: scrollText 10s linear infinite, changeColor 5s linear infinite;
 }
 
 @keyframes scrollText {
@@ -84,14 +84,14 @@ if all_headlines:
     headline_placeholder = st.empty()
 
     # Create a checkbox to pause and resume news
-    pause_news = st.checkbox("Pause News")
+    pause_news = st.checkbox("Pause/Resume News")
 
     # Initialize the current headline index
     current_headline_index = 0
 
     # Automatically update headlines in a continuous loop
     while True:
-        # Display the current headline if the "Pause News" checkbox is not selected
+        # Display the current headline if the "Pause/Resume News" checkbox is not selected
         if not pause_news:
             # Apply custom CSS to the headline
             headline_html = f'<div class="news-headline">{all_headlines[current_headline_index]}</div>'
