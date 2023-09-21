@@ -1,3 +1,4 @@
+import streamlit as st
 import requests
 
 # Replace 'YOUR_API_KEY' with your actual News API key
@@ -20,12 +21,15 @@ if response.status_code == 200:
     # Parse the JSON response
     news_data = response.json()
 
+    # Display the app title
+    st.title("News Headlines")
+
     # Check if articles are present in the response
     if 'articles' in news_data:
-        # Iterate through the articles and print their titles
+        # Iterate through the articles and display their titles
         for article in news_data['articles']:
-            print(article['title'])
+            st.write(article['title'])
     else:
-        print('No articles found in the response.')
+        st.write('No articles found in the response.')
 else:
-    print('Failed to retrieve news data. Status code:', response.status_code)
+    st.write('Failed to retrieve news data. Status code:', response.status_code)
