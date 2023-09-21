@@ -75,113 +75,120 @@ st.title("News Headlines")
 # Inject custom CSS
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Create a button to show API Documentation
-if st.button("API Documentation"):
-    # Display the entire API documentation when the button is clicked
-    st.markdown("""
-    # News Headlines API Documentation
+# Create a button to toggle API Documentation
+show_api_doc = st.button("API Documentation")
 
-    ## Introduction
+# Display API Documentation when button is clicked
+if show_api_doc:
+    st.title("API Documentation")
 
-    The News Headlines API provides access to a Streamlit app that displays news headlines from various sources. The API is designed to showcase news headlines in a visually appealing way, with horizontal scrolling and changing colors. This documentation outlines how to use the API to retrieve and display news headlines.
+    # Add your API documentation content here
+    st.write("Creating comprehensive API documentation typically involves several sections that explain various aspects of the API, including its purpose, endpoints, request parameters, response formats, and usage examples. Here's an example of API documentation for the Streamlit app you've developed:
 
-    **Base URL:** https://newsapi.org/v2/top-headlines?
+# News Headlines API Documentation
 
-    ## Endpoints
+## Introduction
 
-    ### Get News Headlines
+The News Headlines API provides access to a Streamlit app that displays news headlines from various sources. The API is designed to showcase news headlines in a visually appealing way, with horizontal scrolling and changing colors. This documentation outlines how to use the API to retrieve and display news headlines.
 
-    - **Endpoint:** `/get_headlines`
-    - **Method:** GET
-    - **Description:** Retrieve a list of news headlines.
-    - **Parameters:**
-      - `country` (optional): Specify the country code to filter news headlines by country. Default is 'US'.
-      - `pageSize` (optional): Set the number of articles per page. Default is 10.
-    - **Response:**
-      - Status Code: 200 OK
-      - Content-Type: text/html
-      - Body: HTML containing news headlines
+**Base URL:** https://newsapi.org/v2/top-headlines?
 
-    ## Usage
+## Endpoints
 
-    To retrieve news headlines, make a GET request to the `/get_headlines` endpoint. You can specify optional query parameters to filter and customize the results.
+### Get News Headlines
 
-    ### Example Request
+- **Endpoint:** `/get_headlines`
+- **Method:** GET
+- **Description:** Retrieve a list of news headlines.
+- **Parameters:**
+  - `country` (optional): Specify the country code to filter news headlines by country. Default is 'US'.
+  - `pageSize` (optional): Set the number of articles per page. Default is 10.
+- **Response:**
+  - Status Code: 200 OK
+  - Content-Type: text/html
+  - Body: HTML containing news headlines
 
-    ```
-    GET /get_headlines?country=US&pageSize=10
-    ```
+## Usage
 
-    ### Example Response
+To retrieve news headlines, make a GET request to the `/get_headlines` endpoint. You can specify optional query parameters to filter and customize the results.
 
-    ```html
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <!-- CSS and JavaScript resources are included here -->
-    </head>
-    <body>
-        <div class="news-container">
-            <div class="news-headline">Headline 1</div>
-            <div class="news-headline">Headline 2</div>
-            <!-- Additional headlines go here -->
-        </div>
-    </body>
-    </html>
-    ```
+### Example Request
 
-    ## CSS Customization
+```
+GET /get_headlines?country=US&pageSize=10
+```
 
-    The API includes custom CSS for styling the news headlines. You can adjust the CSS styles to modify the appearance of the headlines, including fonts, colors, and animations. Refer to the HTML `<style>` block in the response for details.
+### Example Response
 
-    ## Pagination
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- CSS and JavaScript resources are included here -->
+</head>
+<body>
+    <div class="news-container">
+        <div class="news-headline">Headline 1</div>
+        <div class="news-headline">Headline 2</div>
+        <!-- Additional headlines go here -->
+    </div>
+</body>
+</html>
+```
 
-    The API currently displays news headlines as a continuous loop with horizontal scrolling. You can pause and resume the headlines using the "Pause News" checkbox on the webpage.
+## CSS Customization
 
-    ## Rate Limiting
+The API includes custom CSS for styling the news headlines. You can adjust the CSS styles to modify the appearance of the headlines, including fonts, colors, and animations. Refer to the HTML `<style>` block in the response for details.
 
-    The News Headlines API does not impose rate limits, as it is intended for demonstration purposes. However, consider implementing rate limiting in your own applications to prevent excessive requests.
+## Pagination
 
-    ## Error Handling
+The API currently displays news headlines as a continuous loop with horizontal scrolling. You can pause and resume the headlines using the "Pause News" checkbox on the webpage.
 
-    - If the API encounters an error while retrieving news data from the source, it will respond with an error message and an appropriate HTTP status code.
+## Rate Limiting
 
-    ## Disclaimer
+The News Headlines API does not impose rate limits, as it is intended for demonstration purposes. However, consider implementing rate limiting in your own applications to prevent excessive requests.
 
-    This API is provided for demonstration purposes and may not provide real-time or up-to-date news headlines. The use of the News API for production purposes may require integration with a real news data source.
+## Error Handling
 
-    ## Contact
+- If the API encounters an error while retrieving news data from the source, it will respond with an error message and an appropriate HTTP status code.
 
-    If you have any questions or need assistance, please contact prakashkmr48@gmail.com.
+## Disclaimer
 
-  """)
+This API is provided for demonstration purposes and may not provide real-time or up-to-date news headlines. The use of the News API for production purposes may require integration with a real news data source.
+
+## Contact
+
+If you have any questions or need assistance, please contact [Your Contact Information].
+
+")
+    
+
+# Display news headlines
+if all_headlines:
+    # Create a container for displaying headlines with horizontal scrolling
+    st.markdown('<div class="news-container">', unsafe_allow_html=True)
+
+    # Create a placeholder for displaying headlines
+    headline_placeholder = st.empty()
+
+    # Create a checkbox to pause and resume news
+    pause_news = st.checkbox("Pause News")
+
+    # Initialize the current headline index
+    current_headline_index = 0
+
+    # Automatically update headlines in a continuous loop
+    while True:
+        # Display the current headline if the "Pause News" checkbox is not selected
+        if not pause_news:
+            # Apply custom CSS to the headline
+            headline_html = f'<div class="news-headline">{all_headlines[current_headline_index]}</div>'
+            headline_placeholder.markdown(headline_html, unsafe_allow_html=True)
+
+            # Update the index for the next headline
+            current_headline_index = (current_headline_index + 1) % len(all_headlines)
+
+        # Sleep for 10 seconds before displaying the next headline (slower scrolling)
+        time.sleep(10)
 else:
-    # Check if headlines are present
-    if all_headlines:
-        # Create a container for displaying headlines with horizontal scrolling
-        st.markdown('<div class="news-container">', unsafe_allow_html=True)
-
-        # Create a placeholder for displaying headlines
-        headline_placeholder = st.empty()
-
-        # Create a checkbox to pause and resume news
-        pause_news = st.checkbox("Pause News")
-
-        # Initialize the current headline index
-        current_headline_index = 0
-
-        # Automatically update headlines in a continuous loop
-        while True:
-            # Display the current headline if the "Pause News" checkbox is not selected
-            if not pause_news:
-                # Apply custom CSS to the headline
-                headline_html = f'<div class="news-headline">{all_headlines[current_headline_index]}</div>'
-                headline_placeholder.markdown(headline_html, unsafe_allow_html=True)
-
-                # Update the index for the next headline
-                current_headline_index = (current_headline_index + 1) % len(all_headlines)
-
-            # Sleep for 10 seconds before displaying the next headline (slower scrolling)
-            time.sleep(10)
-    else:
-        st.write('No headlines found.')
+    st.write('No headlines found.')
