@@ -75,7 +75,39 @@ st.title("News Headlines")
 # Inject custom CSS
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Create a button to show API Documentation
+
+    
+
+# Display news headlines
+if all_headlines:
+    # Create a container for displaying headlines with horizontal scrolling
+    st.markdown('<div class="news-container">', unsafe_allow_html=True)
+
+    # Create a placeholder for displaying headlines
+    headline_placeholder = st.empty()
+
+    # Create a checkbox to pause and resume news
+    pause_news = st.checkbox("Pause/Resume News")
+
+    # Initialize the current headline index
+    current_headline_index = 0
+
+    # Automatically update headlines in a continuous loop
+    while True:
+        # Display the current headline if the "Pause/Resume News" checkbox is not selected
+        if not pause_news:
+            # Apply custom CSS to the headline
+            headline_html = f'<div class="news-headline">{all_headlines[current_headline_index]}</div>'
+            headline_placeholder.markdown(headline_html, unsafe_allow_html=True)
+
+            # Update the index for the next headline
+            current_headline_index = (current_headline_index + 1) % len(all_headlines)
+
+        # Sleep for 10 seconds before displaying the next headline (slower scrolling)
+        time.sleep(10)
+else:
+    st.write('No headlines found.')
+    # Create a button to show API Documentation
 if st.button("API Documentation"):
     # Display the entire API documentation when the button is clicked
     st.markdown("""
@@ -155,34 +187,3 @@ This API is provided for demonstration purposes and may not provide real-time or
 If you have any questions or need assistance, please contact prakashkmr48@gmail.com.
 
 """)
-    
-
-# Display news headlines
-if all_headlines:
-    # Create a container for displaying headlines with horizontal scrolling
-    st.markdown('<div class="news-container">', unsafe_allow_html=True)
-
-    # Create a placeholder for displaying headlines
-    headline_placeholder = st.empty()
-
-    # Create a checkbox to pause and resume news
-    pause_news = st.checkbox("Pause News")
-
-    # Initialize the current headline index
-    current_headline_index = 0
-
-    # Automatically update headlines in a continuous loop
-    while True:
-        # Display the current headline if the "Pause News" checkbox is not selected
-        if not pause_news:
-            # Apply custom CSS to the headline
-            headline_html = f'<div class="news-headline">{all_headlines[current_headline_index]}</div>'
-            headline_placeholder.markdown(headline_html, unsafe_allow_html=True)
-
-            # Update the index for the next headline
-            current_headline_index = (current_headline_index + 1) % len(all_headlines)
-
-        # Sleep for 10 seconds before displaying the next headline (slower scrolling)
-        time.sleep(10)
-else:
-    st.write('No headlines found.')
