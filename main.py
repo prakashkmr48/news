@@ -75,6 +75,81 @@ st.title("News Headlines")
 # Inject custom CSS
 st.markdown(custom_css, unsafe_allow_html=True)
 
+# News Headlines API Documentation
+
+## Introduction
+
+The News Headlines API provides access to a Streamlit app that displays news headlines from various sources. The API is designed to showcase news headlines in a visually appealing way, with horizontal scrolling and changing colors. This documentation outlines how to use the API to retrieve and display news headlines.
+
+**Base URL:** [URL of the deployed Streamlit app]
+
+## Endpoints
+
+### Get News Headlines
+
+- **Endpoint:** `/get_headlines`
+- **Method:** GET
+- **Description:** Retrieve a list of news headlines.
+- **Parameters:**
+  - `country` (optional): Specify the country code to filter news headlines by country. Default is 'US'.
+  - `pageSize` (optional): Set the number of articles per page. Default is 10.
+- **Response:**
+  - Status Code: 200 OK
+  - Content-Type: text/html
+  - Body: HTML containing news headlines
+
+## Usage
+
+To retrieve news headlines, make a GET request to the `/get_headlines` endpoint. You can specify optional query parameters to filter and customize the results.
+
+### Example Request
+
+```
+GET /get_headlines?country=US&pageSize=10
+```
+
+### Example Response
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- CSS and JavaScript resources are included here -->
+</head>
+<body>
+    <div class="news-container">
+        <div class="news-headline">Headline 1</div>
+        <div class="news-headline">Headline 2</div>
+        <!-- Additional headlines go here -->
+    </div>
+</body>
+</html>
+```
+
+## CSS Customization
+
+The API includes custom CSS for styling the news headlines. You can adjust the CSS styles to modify the appearance of the headlines, including fonts, colors, and animations. Refer to the HTML `<style>` block in the response for details.
+
+## Pagination
+
+The API currently displays news headlines as a continuous loop with horizontal scrolling. You can pause and resume the headlines using the "Pause News" checkbox on the webpage.
+
+## Rate Limiting
+
+The News Headlines API does not impose rate limits, as it is intended for demonstration purposes. However, consider implementing rate limiting in your own applications to prevent excessive requests.
+
+## Error Handling
+
+- If the API encounters an error while retrieving news data from the source, it will respond with an error message and an appropriate HTTP status code.
+
+## Disclaimer
+
+This API is provided for demonstration purposes and may not provide real-time or up-to-date news headlines. The use of the News API for production purposes may require integration with a real news data source.
+
+## Contact
+
+If you have any questions or need assistance, please contact prakashkmr48@gmail.com.
+
 # Check if headlines are present
 if all_headlines:
     # Create a container for displaying headlines with horizontal scrolling
