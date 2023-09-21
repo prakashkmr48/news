@@ -26,6 +26,9 @@ if response.status_code == 200:
 
     # Check if articles are present in the response
     if 'articles' in news_data:
+        # Store the list of articles
+        articles = news_data['articles']
+        
         # Initialize an index to keep track of the current article
         current_article_index = 0
 
@@ -35,14 +38,14 @@ if response.status_code == 200:
 
         if next_button:
             # Show the next article
-            current_article_index = min(current_article_index + 1, len(news_data['articles']) - 1)
+            current_article_index = (current_article_index + 1) % len(articles)
 
         if prev_button:
             # Show the previous article
-            current_article_index = max(current_article_index - 1, 0)
+            current_article_index = (current_article_index - 1) % len(articles)
 
         # Display the current article's title
-        st.write(news_data['articles'][current_article_index]['title'])
+        st.write(articles[current_article_index]['title'])
     else:
         st.write('No articles found in the response.')
 else:
