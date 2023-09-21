@@ -29,7 +29,7 @@ def fetch_headlines():
 # Fetch and store headlines
 all_headlines = fetch_headlines()
 
-# Define custom CSS for styling headlines
+# Define custom CSS for styling headlines with animations and visual effects
 custom_css = """
 <style>
 .news-headline {
@@ -40,7 +40,7 @@ custom_css = """
     background-color: #f0f0f0;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    animation: fadeInUp 0.5s ease-in-out;
+    animation: fadeInUp 0.5s ease-in-out, rotate 5s linear infinite;
 }
 
 @keyframes fadeInUp {
@@ -51,6 +51,15 @@ custom_css = """
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }
 </style>
@@ -68,14 +77,14 @@ if all_headlines:
     headline_placeholder = st.empty()
 
     # Create a checkbox to pause and resume news
-    pause_news = st.checkbox("Pause/Resume News")
+    pause_news = st.checkbox("Pause News")
 
     # Initialize the current headline index
     current_headline_index = 0
 
     # Automatically update headlines in a continuous loop
     while True:
-        # Display the current headline if the "Pause/Resume News" checkbox is not selected
+        # Display the current headline if the "Pause News" checkbox is not selected
         if not pause_news:
             # Apply custom CSS to the headline
             headline_html = f'<div class="news-headline">{all_headlines[current_headline_index]}</div>'
