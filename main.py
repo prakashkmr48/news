@@ -85,7 +85,7 @@ if st.button("API Documentation"):
 
     The News Headlines API provides access to a Streamlit app that displays news headlines from various sources. The API is designed to showcase news headlines in a visually appealing way, with horizontal scrolling and changing colors. This documentation outlines how to use the API to retrieve and display news headlines.
 
-    **Base URL:** [URL of the deployed Streamlit app]
+    **Base URL:** https://newsapi.org/v2/top-headlines?
 
     ## Endpoints
 
@@ -152,12 +152,9 @@ if st.button("API Documentation"):
 
     ## Contact
 
-    If you have any questions or need assistance, please contact [Your Contact Information].
+    If you have any questions or need assistance, please contact prakashkmr48@gmail.com.
 
-    ---
-
-    Feel free to adapt this template to match the specific details of your API and your documentation style. Include additional sections as needed to provide more information about your API's functionality and usage.
-    """)
+  """)
 else:
     # Check if headlines are present
     if all_headlines:
